@@ -1,5 +1,5 @@
 <?php
-include 'Baidumap.php';
+include 'src/Baidumap.php';
 
 $baidu = new Baidumap();
 $p = new b4(1294830854, 484857493);
