@@ -15,21 +15,18 @@
 所以就写了这么个程序来将投影坐标转换为经纬度坐标。当然是根据百度地图js原来来改造的。
 # 使用方法
 非常简单
-[php]
-include 'src/Baidumap.php';
-$baidu = new Baidumap();
-$p = new b4(1294830854, 484857493);
-$ll = $baidu->convertMC2LL($p);
-var_dump($ll);
-[/php]
+```php
+    include 'src/Baidumap.php';
+    $baidu = new Baidumap();
+    $point = new b4(1294830854, 484857493);
+    $ll = $baidu->convertMC2LL($point);
+    var_dump($ll);
+    #object(b4)#28 (2) { ["lng"]=> float(116.31536904395) ["lat"]=> float(40.071504624032) } 
+```
 
 # 常用场景举例
-需要将用户输入的地址转换成经纬度坐标。百度提了Geocoding API 
-http://developer.baidu.com/map/index.php?title=webapi/guide/webservice-geocoding 
-但是这个接口太傻，不是地址不存在，就是把昌平的地址定位到门头沟去。
+需要将用户输入的地址转换成经纬度坐标。百度提了[Geocoding API](http://developer.baidu.com/map/index.php?title=webapi/guide/webservice-geocoding ) ，但是这个接口太傻，不是地址不存在，就是把昌平的地址定位到门头沟去。
 
-后来发现一个未公开的接口 
-http://api.map.baidu.com/?qt=s&c=131&wd=%E9%87%91%E5%9F%9F%E5%8D%8E%E5%BA%9C&rn=10&ie=utf-8&oue=1&res=api
-这个接口好用，基本上在百度地图首页能搜到的地址这里都能搜到，而且即使你输错了地址也会有一个字段（suggest_query）告诉你正确的地址应该叫什么
+后来发现一个[未公开的地址搜索接口](http://api.map.baidu.com/?qt=s&c=131&wd=%E9%87%91%E5%9F%9F%E5%8D%8E%E5%BA%9C&rn=10&ie=utf-8&oue=1&res=api) ，这个接口好用，基本上在百度地图首页能搜到的地址这里都能搜到，而且即使你输错了地址也会有一个字段（suggest_query）告诉你正确的地址应该叫什么。
 
 但是这个接口返回的坐标是投影坐标：(1294830854,484857493)，这个时候就需要将投影坐标转换为经纬度坐标。
